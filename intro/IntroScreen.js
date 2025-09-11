@@ -14,6 +14,7 @@ import Animated, {
   BounceIn,
   FadeInDown,
 } from "react-native-reanimated";
+import { StatusBar } from "expo-status-bar";
 
 export default function IntroScreen({ navigation }) {
   const handlingNextScreen = () => {
@@ -57,6 +58,7 @@ export default function IntroScreen({ navigation }) {
   //   }, []);
   return (
     <View style={styles.container}>
+      <StatusBar hidden={true} />
       <ImageBackground
         style={{ flex: 1 }}
         source={require("../assets/getting-started.jpg")}
