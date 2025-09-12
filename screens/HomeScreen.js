@@ -10,7 +10,7 @@ export default function HomeScreen() {
 
   const getBrakingNews = async () => {
     try {
-      const url = `https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_NEWS_API_KEY}&language=en&size=5&image=1`;
+      const url = `https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_NEWS_API_KEY}&language=en&size=5&image=1&removeDuplicate=1`;
       const response = await axios.get(url);
       if (response && response.data) {
         setBrakingNews(response.data.results);
@@ -28,7 +28,6 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Header />
       <Searchbar />
-
       <BrakingNews newsList={brakingNews} />
     </View>
   );
