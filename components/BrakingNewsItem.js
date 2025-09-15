@@ -2,41 +2,11 @@ import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Colors } from "../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedStyle,
-} from "react-native-reanimated";
-import Indicator from "./Indicator";
 
 const { width } = Dimensions.get("screen");
 export default function BrakingNewsItem({ item, index, scrollX }) {
-  const rnStyle = useAnimatedStyle(() => {
-    return {
-      //get the previous and next item on the view of the active item,
-      transform: [
-        {
-          translateX: interpolate(
-            scrollX.value,
-            [(index - 1) * width, index * width, (index + 1) * width],
-            [-width * 0.15, 0, width * 0.15],
-            Extrapolation.CLAMP
-          ),
-        },
-        {
-          scale: interpolate(
-            scrollX.value,
-            [(index - 1) * width, index * width, (index + 1) * width],
-            [0.9, 1, 0.9],
-            Extrapolation.CLAMP
-          ),
-        },
-      ],
-    };
-  });
-
   return (
-    <Animated.View style={[styles.container, rnStyle]} key={item.article_id}>
+    <View style={styles.container} key={item.article_id}>
       <Image
         source={{
           uri: item.image_url,
@@ -63,7 +33,7 @@ export default function BrakingNewsItem({ item, index, scrollX }) {
           </Text>
         </View>
       </LinearGradient>
-    </Animated.View>
+    </View>
   );
 }
 
