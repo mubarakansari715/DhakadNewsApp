@@ -25,3 +25,8 @@ export default function App() {
     </SafeAreaView>
   );
 }
+
+/**
+ * EXPO_PUBLIC_NEWS_API_KEY=pub_a915886abd1948669d7499d9aaa138d1
+ * EXPO_PUBLIC_NEWS_API_KEY=pub_eb50854c630f4b89b372a47cc5c3fc94
+ */

@@ -78,7 +78,6 @@ export default function BrakingNews({ newsList }) {
   if (!data || data.length === 0) {
     return (
       <View style={styles.container}>
-        <Text style={styles.titleStyle}>Breaking News</Text>
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyText}>No news available</Text>
         </View>
@@ -88,7 +87,10 @@ export default function BrakingNews({ newsList }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleStyle}>Braking News</Text>
+      {newsList && newsList.length > 0 && (
+        <Text style={styles.titleStyle}>Breaking News</Text>
+      )}
+
       <View style={styles.sliderWraper}>
         <Animated.FlatList
           ref={ref}
@@ -117,7 +119,7 @@ export default function BrakingNews({ newsList }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     marginTop: 10,
   },
   sliderWraper: {

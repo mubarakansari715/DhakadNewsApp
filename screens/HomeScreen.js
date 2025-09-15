@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
@@ -11,9 +12,13 @@ import Searchbar from "../components/Searchbar";
 import axios from "axios";
 import BrakingNews from "../components/BrakingNews";
 import { Colors } from "../constants/Colors";
+import Categories from "../components/Categories";
+import NewsList from "../components/NewsList";
+import Loader from "../components/Loader";
 
 export default function HomeScreen() {
   const [brakingNews, setBrakingNews] = useState([]);
+  const [newsByCategory, setNewsByCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -25,6 +30,8 @@ export default function HomeScreen() {
       setErrorMessage("");
 
       const url = `https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_NEWS_API_KEY}&language=en&size=5&image=1&removeDuplicate=1`;
+      console.log("API calling :: ", url);
+
       const response = await axios.get(url, {
         timeout: 10000, // 10 second timeout
       });
@@ -59,7 +66,45 @@ export default function HomeScreen() {
 
   useEffect(() => {
     getBrakingNews();
+    getNewsByCategory();
   }, []);
+
+  // const [selectedCategoryName, setSelectedCategoryName] = useState();
+
+  // useEffect(() => {
+  //   if (selectedCategoryName) {
+  //     getNewsByCategory(selectedCategoryName);
+  //   }
+  // }, [selectedCategoryName]);
+
+  // get category
+  const onCategoryChanged = (selectedCategory) => {
+    getNewsByCategory(selectedCategory);
+  };
+
+  const getNewsByCategory = async (categoryName) => {
+    try {
+      setNewsByCategory([]);
+      let selectedCategory = "";
+      if (categoryName) {
+        console.log("Use Effect :: ", categoryName);
+        selectedCategory = `&category=${categoryName}`;
+      }
+      const url = `https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_NEWS_API_KEY}&language=en&size=10&image=1&removeDuplicate=1${selectedCategory}`;
+      console.log("API calling :: getNewsByCategory :: ", url);
+      const response = await axios.get(url, {
+        timeout: 10000, // 10 second timeout
+      });
+
+      if (response && response.data && response.data.results) {
+        setNewsByCategory(response.data.results);
+      } else {
+        throw new Error("Invalid response format from API");
+      }
+    } catch (error) {
+      setErrorMessage("Failed to load news. Please try again later.");
+    }
+  };
 
   // Show error state
   if (hasError) {
@@ -83,7 +128,6 @@ export default function HomeScreen() {
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <Text style={styles.titleStyle}>Breaking News</Text>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={Colors.tint} />
           <Text style={styles.loadingText}>Loading latest news...</Text>
@@ -96,7 +140,20 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Header />
       <Searchbar />
-      <BrakingNews newsList={brakingNews} />
+      <ScrollView>
+        <BrakingNews newsList={brakingNews.slice(0, 5)} />
+        <Categories selectedCategory={onCategoryChanged} />
+
+        {newsByCategory.length ? (
+          <NewsList newsList={newsByCategory} />
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Loader size={"large"} />
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 }
