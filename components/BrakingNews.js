@@ -105,6 +105,8 @@ export default function BrakingNews({ newsList }) {
           onMomentumScrollEnd={handleMomentumScrollEnd}
           onEndReachedThreshold={0.5}
           onEndReached={() => setData([...data, ...newsList])}
+          onScrollBeginDrag={() => setIsAutoPlay(false)}
+          onScrollEndDrag={() => setIsAutoPlay(true)}
         />
 
         <Indicator items={newsList} pageIndex={paginationIndex} />
