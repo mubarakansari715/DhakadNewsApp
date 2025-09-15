@@ -31,11 +31,6 @@ export default function HomeScreen() {
 
       if (response && response.data && response.data.results) {
         setBrakingNews(response.data.results);
-        console.log(
-          "Successfully fetched",
-          response.data.results.length,
-          "news items"
-        );
       } else {
         throw new Error("Invalid response format from API");
       }

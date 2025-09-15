@@ -10,7 +10,7 @@ export default function Header() {
         source={{ uri: "https://avatar.iran.liara.run/public" }}
         style={styles.userImageStyle}
       />
-      <Text style={styles.usernameStyle}>Mubarak Ansari</Text>
+      <Text style={styles.usernameStyle}>Anne hathaway</Text>
       <Ionicons name="notifications-outline" size={24} />
     </View>
   );

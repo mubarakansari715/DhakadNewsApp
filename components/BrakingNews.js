@@ -21,8 +21,11 @@ const { width } = Dimensions.get("screen");
 export default function BrakingNews({ newsList }) {
   const [data, setData] = useState([]);
   const [paginationIndex, setPaginationIndex] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
   const scrollX = useSharedValue(0);
   const ref = useRef();
+  const interval = useRef();
 
   // Initialize data when newsList changes
   useEffect(() => {
@@ -48,6 +51,28 @@ export default function BrakingNews({ newsList }) {
       setPaginationIndex(pageNumber);
     }
   };
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (isAutoPlay && newsList.length > 1) {
+      interval.current = setInterval(() => {
+        setPaginationIndex((prevIndex) => {
+          const nextIndex = (prevIndex + 1) % newsList.length;
+          // Actually scroll the FlatList
+          ref.current?.scrollToOffset({
+            offset: nextIndex * width,
+            animated: true,
+          });
+          return nextIndex;
+        });
+      }, 3000); // 3 seconds interval
+    } else {
+      clearInterval(interval.current);
+    }
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, [isAutoPlay, newsList.length]);
 
   // Show empty state if no data
   if (!data || data.length === 0) {
