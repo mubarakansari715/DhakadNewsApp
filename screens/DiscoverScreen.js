@@ -34,7 +34,7 @@ export default function DiscoverScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Searchbar searchText={setSearchQuery} />
-      <Text>Category</Text>
+      <Text style={styles.textTitleStyle}>Category</Text>
       <View style={styles.listContainer}>
         {newsList.map((item) => (
           <CheckBox
@@ -48,7 +48,7 @@ export default function DiscoverScreen({ navigation }) {
           />
         ))}
       </View>
-      <Text>Country</Text>
+      <Text style={styles.textTitleStyle}>Country</Text>
       <View style={styles.listContainer}>
         {countryList.map((item) => (
           <CheckBox
@@ -102,5 +102,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: Colors.white,
+  },
+  textTitleStyle: {
+    paddingStart: 10,
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 20,
   },
 });
