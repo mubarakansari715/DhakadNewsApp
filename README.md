@@ -7,11 +7,12 @@ A modern, feature-rich React Native news application built with Expo that provid
 ### App Demo Video
 
 <div align="center">
-  <video width="300" height="600" controls>
-    <source src="https://github.com/user-attachments/assets/f25604d5-ae7f-40aa-b103-64b0501b8cfe" type="video/webm">
-    Your browser does not support the video tag.
-  </video>
+  <a href="https://github.com/user-attachments/assets/f25604d5-ae7f-40aa-b103-64b0501b8cfe" target="_blank">
+    <img src="https://img.shields.io/badge/📱%20Watch%20Demo-Video%20Demo-blue?style=for-the-badge&logo=github" alt="Watch Demo Video" />
+  </a>
 </div>
+
+**Click the button above to watch the app demo video!**
 
 ### Mobile Screenshots
 
