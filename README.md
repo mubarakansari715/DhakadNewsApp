@@ -2,7 +2,16 @@
 
 A modern, feature-rich React Native news application built with Expo that provides users with the latest news from around the world. The app offers a clean, intuitive interface with category-based news filtering, search functionality, and detailed news reading experience.
 
-## 📱 Screenshots
+## 📱 Screenshots & Demo
+
+### App Demo Video
+
+<div align="center">
+  <video width="300" height="600" controls>
+    <source src="https://github.com/user-attachments/assets/f25604d5-ae7f-40aa-b103-64b0501b8cfe" type="video/webm">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 ### Mobile Screenshots
 
