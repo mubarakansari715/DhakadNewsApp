@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import BrakingNewsItem from "./BrakingNewsItem";
-import { Colors } from "../constants/Colors";
+import { Colors } from "../../constants/Colors";
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,

@@ -5,7 +5,7 @@ import { Colors } from "../constants/Colors";
 export default function Loader({ ...props }) {
   return (
     <View style={styles.container}>
-      <ActivityIndicator color={Colors.tint} {...props} />
+      <ActivityIndicator size={"large"} color={Colors.tint} {...props} />
       <Text>Loading...</Text>
     </View>
   );
@@ -17,6 +17,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    gap:10
+    gap: 10,
   },
 });

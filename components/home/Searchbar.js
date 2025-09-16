@@ -1,14 +1,22 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors } from "../constants/Colors";
+import { Colors } from "../../constants/Colors";
 
-export default function Searchbar() {
+export default function Searchbar({ searchText, placeholder = "Search..." }) {
   return (
     <View style={styles.container}>
       <View style={styles.searchbarStyle}>
         <Ionicons name="search" size={24} color={Colors.lightGrey} />
-        <TextInput style={styles.textInputStyle} autoCapitalize="none" />
+        <TextInput
+          style={styles.textInputStyle}
+          autoCapitalize="none"
+          placeholder={placeholder}
+          placeholderTextColor={Colors.lightGrey}
+          onChangeText={(value) => {
+            searchText(value);
+          }}
+        />
       </View>
     </View>
   );

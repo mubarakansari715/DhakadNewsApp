@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Animated from "react-native-reanimated";
-import { Colors } from "../constants/Colors";
+import { Colors } from "../../constants/Colors";
 
 export default function Indicator({ items, pageIndex }) {
   return (

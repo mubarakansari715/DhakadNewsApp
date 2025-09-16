@@ -7,13 +7,13 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
-import Searchbar from "../components/Searchbar";
+import Header from "../components/home/Header";
+import Searchbar from "../components/home/Searchbar";
 import axios from "axios";
-import BrakingNews from "../components/BrakingNews";
+import BrakingNews from "../components/home/BrakingNews";
 import { Colors } from "../constants/Colors";
-import Categories from "../components/Categories";
-import NewsList from "../components/NewsList";
+import Categories from "../components/home/Categories";
+import NewsList from "../components/home/NewsList";
 import Loader from "../components/Loader";
 
 export default function HomeScreen() {
@@ -69,15 +69,7 @@ export default function HomeScreen() {
     getNewsByCategory();
   }, []);
 
-  // const [selectedCategoryName, setSelectedCategoryName] = useState();
-
-  // useEffect(() => {
-  //   if (selectedCategoryName) {
-  //     getNewsByCategory(selectedCategoryName);
-  //   }
-  // }, [selectedCategoryName]);
-
-  // get category
+  
   const onCategoryChanged = (selectedCategory) => {
     getNewsByCategory(selectedCategory);
   };

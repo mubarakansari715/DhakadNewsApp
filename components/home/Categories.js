@@ -7,8 +7,8 @@ import {
   View,
 } from "react-native";
 import React, { useRef, useState } from "react";
-import { Colors } from "../constants/Colors";
-import newsCategoryList from "../constants/CategoriesList";
+import { Colors } from "../../constants/Colors";
+import newsCategoryList from "../../constants/CategoriesList";
 
 const { width } = Dimensions.get("window");
 
