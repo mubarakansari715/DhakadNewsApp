@@ -10,6 +10,7 @@ import React from "react";
 import { Colors } from "../../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import { HeightOfCarosel } from "./BrakingNews";
 
 const { width } = Dimensions.get("screen");
 export default function BrakingNewsItem({ item }) {
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     width: width - 40,
-    height: 180,
+    height: HeightOfCarosel,
     borderRadius: 20,
   },
   linearGradientBackground: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     top: 0,
     borderRadius: 20,
     width: width - 40,
-    height: 180,
+    height: HeightOfCarosel,
   },
   textOverly: {
     flex: 1,

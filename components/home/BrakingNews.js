@@ -15,67 +15,14 @@ import Animated, {
   useAnimatedScrollHandler,
 } from "react-native-reanimated";
 import Indicator from "./Indicator";
+import Carousel, { Pagination } from "react-native-reanimated-carousel";
 
 const { width } = Dimensions.get("screen");
+export const HeightOfCarosel = 258;
 
 export default function BrakingNews({ newsList }) {
-  const [data, setData] = useState([]);
-  const [paginationIndex, setPaginationIndex] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
-
-  const scrollX = useSharedValue(0);
-  const ref = useRef();
-  const interval = useRef();
-
-  // Initialize data when newsList changes
-  useEffect(() => {
-    if (newsList && newsList.length > 0) {
-      setData(newsList);
-      setPaginationIndex(0);
-    }
-  }, [newsList]);
-
-  // Simple scroll handler for animations
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollX.value = event.contentOffset.x;
-    },
-  });
-
-  // Handle page changes when scroll ends
-  const handleMomentumScrollEnd = (event) => {
-    const currentIndex = Math.round(event.nativeEvent.contentOffset.x / width);
-    const pageNumber = currentIndex % newsList.length;
-
-    if (pageNumber >= 0 && pageNumber < newsList.length) {
-      setPaginationIndex(pageNumber);
-    }
-  };
-
-  // Auto-play functionality
-  useEffect(() => {
-    if (isAutoPlay && newsList.length > 1) {
-      interval.current = setInterval(() => {
-        setPaginationIndex((prevIndex) => {
-          const nextIndex = (prevIndex + 1) % newsList.length;
-          // Actually scroll the FlatList
-          ref.current?.scrollToOffset({
-            offset: nextIndex * width,
-            animated: true,
-          });
-          return nextIndex;
-        });
-      }, 3000); // 3 seconds interval
-    } else {
-      clearInterval(interval.current);
-    }
-    return () => {
-      clearInterval(interval.current);
-    };
-  }, [isAutoPlay, newsList.length]);
-
   // Show empty state if no data
-  if (!data || data.length === 0) {
+  if (!newsList || newsList.length === 0) {
     return (
       <View style={styles.container}>
         <View style={styles.emptyContainer}>
@@ -85,42 +32,75 @@ export default function BrakingNews({ newsList }) {
     );
   }
 
+  const progress = useSharedValue(0);
+  const ref = React.useRef(null);
+
+  const onPressPagination = (index) => {
+    ref.current?.scrollTo({
+      count: index - progress.value,
+      animated: true,
+    });
+  };
+
+  const { width: screenWidth } = Dimensions.get("window");
+
   return (
-    <View style={styles.container}>
-      {newsList && newsList.length > 0 && (
-        <Text style={styles.titleStyle}>Breaking News</Text>
-      )}
-
-      <View style={styles.sliderWraper}>
-        <Animated.FlatList
+    <View
+      id="carousel-component"
+      dataSet={{ kind: "basic-layouts", name: "parallax" }}
+      style={{ alignItems: "center" }}
+    >
+      <View>
+        <Carousel
           ref={ref}
-          keyExtractor={(item, index) => `list_item${index}`}
-          data={data}
+          autoPlay={true}
+          autoPlayInterval={2000}
+          data={newsList}
+          height={HeightOfCarosel}
+          loop={true}
+          pagingEnabled={true}
+          snapEnabled={true}
+          width={screenWidth}
+          style={{
+            width: screenWidth,
+          }}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 0.83,
+            parallaxScrollingOffset: 110,
+          }}
+          onProgressChange={progress}
           renderItem={({ item, index }) => (
-            <BrakingNewsItem item={item} index={index} scrollX={scrollX} />
+            <BrakingNewsItem item={item} index={index} />
           )}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          onScroll={scrollHandler}
-          scrollEventThrottle={16}
-          onMomentumScrollEnd={handleMomentumScrollEnd}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => setData([...data, ...newsList])}
-          onScrollBeginDrag={() => setIsAutoPlay(false)}
-          onScrollEndDrag={() => setIsAutoPlay(true)}
         />
-
-        <Indicator items={newsList} pageIndex={paginationIndex} />
       </View>
+
+      <Pagination.Basic
+        progress={progress}
+        data={newsList}
+        dotStyle={{
+          backgroundColor: Colors.darkGrey,
+          width: 8,
+          height: 8,
+          borderRadius: 4,
+        }}
+        activeDotStyle={{
+          backgroundColor: Colors.tint,
+          width: 8,
+          height: 8,
+          borderRadius: 4,
+        }}
+        containerStyle={{ gap: 5, marginBottom: 10 }}
+        onPress={onPressPagination}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    marginTop: 10,
+    // marginTop: 10,
   },
   sliderWraper: {
     justifyContent: "center",

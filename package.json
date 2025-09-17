@@ -20,12 +20,14 @@
     "react": "19.0.0",
     "react-native": "0.79.5",
     "react-native-reanimated": "~3.17.4",
+    "react-native-reanimated-carousel": "^4.0.3",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~19.0.10",
+    "babel-preset-expo": "^54.0.1",
     "typescript": "~5.8.3"
   },
   "private": true
