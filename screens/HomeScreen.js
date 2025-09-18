@@ -7,8 +7,9 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import Header from "../components/home/Header";
-import Searchbar from "../components/home/Searchbar";
+import SearchView from "../components/home/SearchView";
 import axios from "axios";
 import BrakingNews from "../components/home/BrakingNews";
 import { Colors } from "../constants/Colors";
@@ -17,6 +18,7 @@ import NewsList from "../components/home/NewsList";
 import Loader from "../components/Loader";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
   const [brakingNews, setBrakingNews] = useState([]);
   const [newsByCategory, setNewsByCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,12 +66,15 @@ export default function HomeScreen() {
     getBrakingNews();
   };
 
+  const handleSearchPress = () => {
+    navigation.navigate("Discover");
+  };
+
   useEffect(() => {
     getBrakingNews();
     getNewsByCategory();
   }, []);
 
-  
   const onCategoryChanged = (selectedCategory) => {
     getNewsByCategory(selectedCategory);
   };
@@ -103,7 +108,7 @@ export default function HomeScreen() {
     return (
       <View style={styles.container}>
         <Header />
-        <Searchbar />
+        <SearchView onPress={handleSearchPress} />
         <View style={styles.errorContainer}>
           <Text style={styles.errorIcon}>⚠️</Text>
           <Text style={styles.errorTitle}>Unable to Load News</Text>
@@ -131,7 +136,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Header />
-      <Searchbar />
+      <SearchView onPress={handleSearchPress} />
       <ScrollView>
         <BrakingNews newsList={brakingNews.slice(0, 5)} />
         <Categories selectedCategory={onCategoryChanged} />
