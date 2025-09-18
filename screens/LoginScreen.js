@@ -3,21 +3,21 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   View,
   Keyboard,
   TouchableOpacity,
   Alert,
+  Dimensions,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { Colors } from "../constants/Colors";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import Animated, {
-  FadeIn,
-  FadeInDown,
-  FadeInRight,
-  FadeInUp,
-} from "react-native-reanimated";
+import { FontAwesome } from "@expo/vector-icons";
+import Animated, { FadeInRight, FadeInUp } from "react-native-reanimated";
+import FormContainer from "../components/common/FormContainer";
+import CustomInput from "../components/common/CustomInput";
+import CustomButton from "../components/common/CustomButton";
+import AnimatedContainer from "../components/common/AnimatedContainer";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -38,9 +38,11 @@ export default function LoginScreen({ navigation }) {
       keyboardVerticalOffset={0}
     >
       <View style={styles.container}>
-        <Animated.View
+        <AnimatedContainer
+          animationType="fadeInDown"
+          duration={1000}
+          delay={200}
           style={styles.containerImage}
-          entering={FadeInDown.duration(1000).delay(200)}
         >
           <FontAwesome name="newspaper-o" size={100} color={Colors.gray} />
           <Animated.Text
@@ -49,46 +51,40 @@ export default function LoginScreen({ navigation }) {
           >
             Dhakad News
           </Animated.Text>
-        </Animated.View>
-        <View style={styles.boxContainer}>
+        </AnimatedContainer>
+
+        <FormContainer maxHeight={height - 300}>
           <Text style={styles.titleStyle}>Login Page</Text>
-          <View style={styles.inputContainer}>
-            <View style={styles.inputSubContainer}>
-              <Text style={styles.inputTextTitle}>Email</Text>
-              <TextInput
-                style={styles.inputTextStyle}
-                placeholder="Enter your email"
-                placeholderTextColor={Colors.gray}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-                returnKeyType="next"
-              />
-            </View>
-            <View style={styles.inputSubContainer}>
-              <Text style={styles.inputTextTitle}>Password</Text>
-              <TextInput
-                style={styles.inputTextStyle}
-                placeholder="Enter you password"
-                placeholderTextColor={Colors.gray}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                returnKeyType="done"
-                onSubmitEditing={() => Keyboard.dismiss()}
-              />
-            </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <CustomInput
+              label="Email"
+              placeholder="Enter your email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              returnKeyType="next"
+            />
+
+            <CustomInput
+              label="Password"
+              placeholder="Enter your password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              returnKeyType="done"
+              onSubmitEditing={() => Keyboard.dismiss()}
+            />
+
             <Animated.View entering={FadeInUp.duration(1000).delay(600)}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={styles.button}
+              <CustomButton
+                title="Login"
                 onPress={loginHandling}
-              >
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
+                style={styles.button}
+              />
             </Animated.View>
+
             <Animated.View entering={FadeInRight.duration(1000).delay(800)}>
               <TouchableOpacity
                 activeOpacity={0.6}
@@ -99,13 +95,13 @@ export default function LoginScreen({ navigation }) {
             </Animated.View>
 
             <View style={{ marginBottom: 20 }} />
-          </View>
-        </View>
+          </ScrollView>
+        </FormContainer>
       </View>
     </KeyboardAvoidingView>
   );
 }
-
+const { height } = Dimensions.get("screen");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -123,48 +119,18 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5,
     color: Colors.gray,
   },
-  boxContainer: {
-    backgroundColor: Colors.white,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingHorizontal: 10,
-    paddingTop: 15,
-  },
   titleStyle: {
     paddingVertical: 20,
     textAlign: "center",
     fontWeight: "600",
     fontSize: 24,
   },
-  inputContainer: { gap: 20 },
-  inputSubContainer: {
-    gap: 5,
-  },
-  inputTextTitle: {
-    fontSize: 16,
-    color: Colors.darkGrey,
-  },
-  inputTextStyle: {
-    borderColor: Colors.darkGrey,
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    height: 50,
-    fontSize: 17,
-  },
   button: {
-    backgroundColor: Colors.tint,
-    paddingVertical: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: "500",
-    color: Colors.white,
+    marginTop: 10,
   },
   signupContainer: {
     alignItems: "center",
+    marginTop: 20,
   },
   signupText: {
     fontSize: 16,
