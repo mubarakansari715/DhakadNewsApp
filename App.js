@@ -6,6 +6,7 @@ import IntroScreen from "./intro/IntroScreen";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import NewsDetailsScreen from "./screens/NewsDetailsScreen";
 import SearchScreen from "./screens/SearchScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ function RootStack() {
       <Stack.Screen name="tab" component={TabNavigation} />
       <Stack.Screen name="newsdetails" component={NewsDetailsScreen} />
       <Stack.Screen name="searchscreen" component={SearchScreen} />
+      <Stack.Screen name="login" component={LoginScreen} />
     </Stack.Navigator>
   );
 }

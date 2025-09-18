@@ -18,7 +18,7 @@ import { StatusBar } from "expo-status-bar";
 
 export default function IntroScreen({ navigation }) {
   const handlingNextScreen = () => {
-    navigation.replace("tab");
+    navigation.replace("login");
   };
 
   // Animation values

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     width: width - 40,
-    height: HeightOfCarosel,
+    height: 258,
     borderRadius: 20,
   },
   linearGradientBackground: {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     top: 0,
     borderRadius: 20,
     width: width - 40,
-    height: HeightOfCarosel,
+    height: 258,
   },
   textOverly: {
     flex: 1,
