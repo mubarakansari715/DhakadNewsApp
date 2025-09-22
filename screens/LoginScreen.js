@@ -10,7 +10,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import Animated, { FadeInRight, FadeInUp } from "react-native-reanimated";
@@ -18,14 +18,30 @@ import FormContainer from "../components/common/FormContainer";
 import CustomInput from "../components/common/CustomInput";
 import CustomButton from "../components/common/CustomButton";
 import AnimatedContainer from "../components/common/AnimatedContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../store/AuthSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginHandling = () => {
+  //redux
+  const dispatch = useDispatch();
+
+  const loginHandling = async () => {
     if (email && password) {
-      navigation.navigate("tab");
+      try {
+        // Save login state to AsyncStorage
+        await AsyncStorage.setItem("isLoggedIn", "true");
+        await AsyncStorage.setItem("userEmail", email);
+
+        // Update Redux state
+        dispatch(userLogin(true));
+      } catch (error) {
+        console.error("Login error:", error);
+        Alert.alert("Error", "Login failed. Please try again.");
+      }
     } else {
       Alert.alert("Alert", "Please enter the Email and Password");
     }
@@ -53,7 +69,7 @@ export default function LoginScreen({ navigation }) {
           </Animated.Text>
         </AnimatedContainer>
 
-        <FormContainer maxHeight={height - 300}>
+        <FormContainer maxHeight={height - 200}>
           <Text style={styles.titleStyle}>Login Page</Text>
           <ScrollView showsVerticalScrollIndicator={false}>
             <CustomInput

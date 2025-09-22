@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { icon } from "../constants/Icons";
 import { Colors } from "../constants/Colors";
 import DiscoverScreen from "../screens/DiscoverScreen";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 

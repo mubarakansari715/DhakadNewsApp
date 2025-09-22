@@ -16,6 +16,7 @@ import { Colors } from "../constants/Colors";
 import Categories from "../components/home/Categories";
 import NewsList from "../components/home/NewsList";
 import Loader from "../components/Loader";
+import { useSelector } from "react-redux";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -78,6 +79,12 @@ export default function HomeScreen() {
   const onCategoryChanged = (selectedCategory) => {
     getNewsByCategory(selectedCategory);
   };
+
+  const isLoginUser = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    console.log("user login :: ", isLoginUser);
+  }, [isLoginUser]);
 
   const getNewsByCategory = async (categoryName) => {
     try {
